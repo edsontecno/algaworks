@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.edsonandrade.model.Pessoa;
 import br.com.edsonandrade.repository.PessoaRepository;
 
-@Service
+@Service 
 public class PessoaService {
 
 	@Autowired
