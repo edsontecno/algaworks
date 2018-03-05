@@ -8,13 +8,19 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.edsonandrade.model.Lancamento;
+import br.com.edsonandrade.model.Pessoa;
 import br.com.edsonandrade.repository.LancamentoRepository;
+import br.com.edsonandrade.repository.filter.LancamentoFilter;
+import br.com.edsonandrade.service.exception.PessoaInexistenteOuInativaException;
 
 @Service
 public class LancamentoService {
 
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
+	
+	@Autowired
+	private PessoaService pessoaService;
 	
 	public Lancamento pesquisarLancamento(Long codigo){
 		Lancamento lancamento = lancamentoRepository.findOne(codigo);
@@ -29,6 +35,12 @@ public class LancamentoService {
 	}
 
 	public Lancamento salvar(Lancamento lancamento) {
+		Pessoa pessoa = pessoaService.findOne(lancamento.getPessoa().getCodigo());
+		
+		if(pessoa != null && !pessoa.getAtivo()) {
+			throw new PessoaInexistenteOuInativaException();
+		}
+		
 		return lancamentoRepository.save(lancamento);
 	}
 
@@ -42,4 +54,9 @@ public class LancamentoService {
 	public void deletarLancamento(Long codigo) {
 		lancamentoRepository.delete(pesquisarLancamento(codigo));
 	}
+
+	public List<Lancamento> pesquisarComFiltro(LancamentoFilter filter) {
+		return lancamentoRepository.filtrar(filter);
+	}
+	
 }

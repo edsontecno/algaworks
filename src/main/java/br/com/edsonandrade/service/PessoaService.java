@@ -23,6 +23,10 @@ public class PessoaService {
 		}
 		return pessoa;
 	}
+	
+	public Pessoa findOne(Long codigo){
+		return pessoaRepository.findOne(codigo);
+	}
 
 	public List<Pessoa> pesquisarTodas() {
 		return pessoaRepository.findAll();
