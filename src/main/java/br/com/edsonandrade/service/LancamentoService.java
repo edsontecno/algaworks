@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.edsonandrade.model.Lancamento;
@@ -55,8 +57,8 @@ public class LancamentoService {
 		lancamentoRepository.delete(pesquisarLancamento(codigo));
 	}
 
-	public List<Lancamento> pesquisarComFiltro(LancamentoFilter filter) {
-		return lancamentoRepository.filtrar(filter);
+	public Page<Lancamento> pesquisarComFiltro(LancamentoFilter filter, Pageable pageable) {
+		return lancamentoRepository.filtrar(filter,pageable);
 	}
 	
 }
