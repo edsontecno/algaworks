@@ -22,12 +22,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-			   .withClient("admin")
-			   .secret("admin")
-			   .scopes("read", "write")
-			   .authorizedGrantTypes("password", "refresh_token")
-			   .refreshTokenValiditySeconds(3600*24)
-			   .accessTokenValiditySeconds(20);
+				   .withClient("admin")
+				   .secret("admin")
+				   .scopes("read", "write")
+				   .authorizedGrantTypes("password", "refresh_token")
+				   .refreshTokenValiditySeconds(3600*24)
+				   .accessTokenValiditySeconds(3600)
+			   .and()
+				   .withClient("mobile")
+				   .secret("mobile")
+				   .scopes("read")
+				   .authorizedGrantTypes("password", "refresh_token")
+				   .refreshTokenValiditySeconds(3600*24)
+				   .accessTokenValiditySeconds(3600);
 	}
 	
 	@Override

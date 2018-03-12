@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,17 +51,20 @@ public class LancamentoResource {
 	}
 	
 	@GetMapping("/filtro")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<Lancamento> pesquisarComFiltro(LancamentoFilter filter, Pageable pageable){
 		return lancamentoService.pesquisarComFiltro(filter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Lancamento> pesquisarPorId(@PathVariable  Long codigo){
 		Lancamento lancamento = lancamentoService.pesquisarLancamento(codigo);
 		 return lancamento != null ? ResponseEntity.ok(lancamento) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
 		Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);	
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamentoSalvo.getCodigo()));
@@ -68,12 +72,14 @@ public class LancamentoResource {
 	}
 	
 	@PutMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Lancamento> alterarLancamento(@PathVariable Long codigo, @Valid @RequestBody  Lancamento lancamento){
 		Lancamento lancamentoAlterado = lancamentoService.alterarLancamento(lancamento,codigo);
 		 return lancamentoAlterado != null ? ResponseEntity.ok(lancamentoAlterado) : ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public void deletarLancamento(@PathVariable Long codigo){
 		lancamentoService.deletarLancamento(codigo);
 	}
