@@ -29,6 +29,7 @@ import br.com.edsonandrade.event.RecursoCriadoEvent;
 import br.com.edsonandrade.exceptionhandler.SistemaHandler.Erro;
 import br.com.edsonandrade.model.Lancamento;
 import br.com.edsonandrade.repository.filter.LancamentoFilter;
+import br.com.edsonandrade.repository.projection.ResumoLancamento;
 import br.com.edsonandrade.service.LancamentoService;
 import br.com.edsonandrade.service.exception.PessoaInexistenteOuInativaException;
 
@@ -90,5 +91,11 @@ public class LancamentoResource {
 		String mensagemDesenvolvedor = ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		return ResponseEntity.badRequest().body(erros);
+	}
+	
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return lancamentoService.resumir(lancamentoFilter, pageable);
 	}
 }

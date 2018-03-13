@@ -13,6 +13,7 @@ import br.com.edsonandrade.model.Lancamento;
 import br.com.edsonandrade.model.Pessoa;
 import br.com.edsonandrade.repository.LancamentoRepository;
 import br.com.edsonandrade.repository.filter.LancamentoFilter;
+import br.com.edsonandrade.repository.projection.ResumoLancamento;
 import br.com.edsonandrade.service.exception.PessoaInexistenteOuInativaException;
 
 @Service
@@ -59,6 +60,10 @@ public class LancamentoService {
 
 	public Page<Lancamento> pesquisarComFiltro(LancamentoFilter filter, Pageable pageable) {
 		return lancamentoRepository.filtrar(filter,pageable);
+	}
+
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return lancamentoRepository.resumir(lancamentoFilter,pageable);
 	}
 	
 }
