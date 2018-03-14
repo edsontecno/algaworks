@@ -1,12 +1,12 @@
 package br.com.edsonandrade.resource;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.edsonandrade.event.RecursoCriadoEvent;
 import br.com.edsonandrade.model.Pessoa;
+import br.com.edsonandrade.repository.filter.PessoaFilter;
 import br.com.edsonandrade.service.PessoaService;
 
 
@@ -34,10 +35,16 @@ public class PessoaResource {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
-	@GetMapping
+	/*@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
 	public List<Pessoa> pesquisarTodas(){
 		return pessoaService.pesquisarTodas();
+	}*/
+	
+	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+	public Page<Pessoa> pesquisarTodas(PessoaFilter filter, Pageable pageable){
+		return pessoaService.pesquisarPessoasComFiltros(filter,pageable);
 	}
 	
 	@GetMapping("/{codigo}")

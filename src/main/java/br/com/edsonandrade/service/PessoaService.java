@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.edsonandrade.model.Pessoa;
 import br.com.edsonandrade.repository.PessoaRepository;
+import br.com.edsonandrade.repository.filter.PessoaFilter;
 
 @Service 
 public class PessoaService {
@@ -52,5 +55,9 @@ public class PessoaService {
 		pessoaSalva.setAtivo(ativo);
 		return pessoaRepository.save(pessoaSalva);
 		
+	}
+
+	public Page<Pessoa> pesquisarPessoasComFiltros(PessoaFilter filter, Pageable pageable) {
+		return pessoaRepository.filtrar(filter,pageable);
 	}
 }

@@ -80,10 +80,23 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
+		<!-- 
+			METAMODEL
+			NECESSÁRIO APENAS PARA GERAR AS CLASSES MAPEANDO OS ATRIBUTOS DA CLASSE MODEL
+			CONFIGURAÇÃO:
+			PROPRIEDADES PROJETO-> JAVA COMPILER->ANNOTATION PROCESSING->
+				 (ENABLE ENABLE PROJECT SPECIFIC SETTING) ALTERAR GENERATE SOURCE DIRECTORY
+		
+			JAVA COMPILER-> ANONOTATION PROCESSING-> FACTORY PATH->
+				ENABLE PROJECT SPECIF SETTING
+				ADD JAR DO JPAMODELGEN
+		 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 		</dependency>
+		
+		<!-- FIM METAMODEL -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
