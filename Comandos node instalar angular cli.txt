@@ -1,0 +1,7 @@
+ng  new [nome do projeto] ->> criar projeto
+ng serve ->> subir projeto
+
+npm uninstall -g @angular/cli ->> desinstalar angular cli
+npm cache clean ->> limpar cache
+
+npm install -g @angular/cli->> instalar angular cli
