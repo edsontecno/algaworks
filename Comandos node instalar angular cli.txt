@@ -5,3 +5,5 @@ npm uninstall -g @angular/cli ->> desinstalar angular cli
 npm cache clean ->> limpar cache
 
 npm install -g @angular/cli->> instalar angular cli
+
+ng g c [nome component] --spec=false / ng generate component [nome component] --spec=false
