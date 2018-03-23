@@ -7,3 +7,8 @@ npm cache clean ->> limpar cache
 npm install -g @angular/cli->> instalar angular cli
 
 ng g c [nome component] --spec=false / ng generate component [nome component] --spec=false
+
+
+
+npm install primeng --save
+npm install font-awesome --save
